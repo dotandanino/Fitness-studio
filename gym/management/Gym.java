@@ -21,9 +21,10 @@ public class Gym {
     }
 
     public void setSecretary(Person p1, int i) {
-        secretary=new Secretary(p1,i);
+        Secretary s1=new Secretary(p1,i);
+        s1.setNotifications(secretary.getNotifications());
+        secretary=s1;
     }
-
     public Secretary getSecretary() {
         return secretary;
     }

@@ -12,4 +12,9 @@ public class Client {
     public String getNotifications() {
         return this.person.getNotifications();
     }
+//    @Override
+//    public boolean equals(Object o){
+//        Client c=(Client) o;
+//        return c.person.equals(this.person);
+//    }
 }
