@@ -1,6 +1,6 @@
 package gym.management.Sessions;
 
-import gym.customers.Instructor;
+import gym.management.Instructor;
 
 public class sessionFactory {
     public static Session createSession(SessionType st,String date, ForumType ft, Instructor i){

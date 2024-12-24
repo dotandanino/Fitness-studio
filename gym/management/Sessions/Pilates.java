@@ -1,10 +1,6 @@
 package gym.management.Sessions;
 
-import gym.customers.Client;
-import gym.customers.Instructor;
-
-import java.util.ArrayList;
-import java.util.List;
+import gym.management.Instructor;
 
 public class Pilates extends Session {
     private static final int MAXCLIENTS=30;

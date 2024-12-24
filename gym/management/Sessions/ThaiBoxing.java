@@ -1,6 +1,6 @@
 package gym.management.Sessions;
 
-import gym.customers.Instructor;
+import gym.management.Instructor;
 
 public class ThaiBoxing extends Session{
     private static final int MAXCLIENTS=20;

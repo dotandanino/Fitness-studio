@@ -26,6 +26,7 @@ public class Person {
         ID=IDStart;
         IDStart++;
     }
+
     public Gender getGender(){
         return gender;
     }
@@ -45,10 +46,6 @@ public class Person {
         return balance;
     }
 
-    public void setBalance(int balance) {
-        this.balance = balance;
-    }
-
     @Override
     public boolean equals(Object o){
         Person p=(Person) o;
@@ -64,5 +61,9 @@ public class Person {
     @Override
     public String toString(){
         return "ID: "+ID+" | Name: "+name+" | Gender: "+gender+" | Birthday: "+dateStr+" | Age: "+ageCalculator(this)+" | Balance: "+balance;
+    }
+
+    public void addToBalance(int i) {
+        balance+=i;
     }
 }

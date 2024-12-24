@@ -1,3 +1,4 @@
+# noinspection PyInterpreter
 import subprocess
 import filecmp
 import os

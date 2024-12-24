@@ -1,5 +1,6 @@
 package gym.customers;
 
+import gym.management.Member;
 import gym.management.Sessions.ForumType;
 
 import java.time.LocalDate;
@@ -7,33 +8,10 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client {
+public class Client implements Member {
     private Person person;
     private ArrayList<ForumType> forumTypes;
     private List<String> notifications;
-
-    public ArrayList<ForumType> getForumTypes() {
-        return forumTypes;
-    }
-    public int getBalance() {
-        return person.getBalance();
-    }
-
-    public void setBalance(int balance) {
-        person.setBalance(balance);
-    }
-
-    private static int ageCalculator(Person p){
-        LocalDate now = LocalDate.now();
-        LocalDate birth=p.getDate();
-        Period period= Period.between(birth,now);
-        return(period.getYears());
-    }
-
-    public void setNotifications(List<String> notifications) {
-        this.notifications = notifications;
-    }
-
     public Client(Person person){
         this.person=person;
         this.notifications=new ArrayList<>();
@@ -46,11 +24,22 @@ public class Client {
         if(ageCalculator(person)>=65)
             forumTypes.add(ForumType.Seniors);
     }
+
+    public ArrayList<ForumType> getForumTypes() {
+        return forumTypes;
+    }
+    public int getBalance() {
+        return person.getBalance();
+    }
+    private static int ageCalculator(Person p){
+        LocalDate now = LocalDate.now();
+        LocalDate birth=p.getDate();
+        Period period= Period.between(birth,now);
+        return(period.getYears());
+    }
+
     public String getName() {
         return person.getName();
-    }
-    public void addNotification(String str){
-        this.notifications.add(str);
     }
     public String getNotifications() {
         return String.valueOf(this.notifications);
@@ -63,5 +52,14 @@ public class Client {
     @Override
     public String toString(){
         return person.toString();
+    }
+
+    @Override
+    public void update(String newsletter) {
+        this.notifications.add(newsletter);
+    }
+
+    public void addToBalance(int i) {
+        person.addToBalance(i);
     }
 }
