@@ -1,16 +1,14 @@
 package gym.customers;
 
-import gym.management.Sessions.ForumType;
+import gym.management.Dates;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class Person {
     private String name;
-    private int balance;
+    private int[] balance=new int[1];//array for the copy constructor because
+    // the client, instructor and secretary should have the same balance
+    //we know we could build new class but only for one int we preferred
     private Gender gender;
     private String dateStr;
     private LocalDate date;
@@ -18,13 +16,22 @@ public class Person {
     private int ID;
     private String notifications;
     public Person(String name, int balance, Gender gender, String date) {
-        this.balance=balance;
+        this.balance[0]=balance;
         this.name=name;
         this.gender=gender;
         dateStr=date;
-        this.date = LocalDate.of(Integer.parseInt(date.substring(6,10)),Integer.parseInt(date.substring(3,5)),Integer.parseInt(date.substring(0,2)));
+        this.date = Dates.toLocal(date);
         ID=IDStart;
         IDStart++;
+    }
+
+    public Person(Person person) {
+        this.balance=person.balance;
+        this.name=person.name;
+        this.gender=person.gender;
+        this.dateStr= person.dateStr;
+        this.date=person.date;
+        this.ID= person.ID;
     }
 
     public Gender getGender(){
@@ -43,7 +50,7 @@ public class Person {
     }
 
     public int getBalance() {
-        return balance;
+        return balance[0];
     }
 
     @Override
@@ -51,19 +58,14 @@ public class Person {
         Person p=(Person) o;
         return (this.ID==p.ID);
     }
-    private static int ageCalculator(Person p){
-        LocalDate now = LocalDate.now();
-        LocalDate birth=p.getDate();
-        Period period= Period.between(birth,now);
-        return(period.getYears());
-    }
+
     //ID: 1112 | Name: Nofar | Gender: Female | Birthday: 03-07-1998 | Age: 26 | Balance: 890
     @Override
     public String toString(){
-        return "ID: "+ID+" | Name: "+name+" | Gender: "+gender+" | Birthday: "+dateStr+" | Age: "+ageCalculator(this)+" | Balance: "+balance;
+        return "ID: "+ID+" | Name: "+name+" | Gender: "+gender+" | Birthday: "+dateStr+" | Age: "+Dates.ageCalculator(this)+" | Balance: "+balance[0];
     }
 
     public void addToBalance(int i) {
-        balance+=i;
+        balance[0]+=i;
     }
 }

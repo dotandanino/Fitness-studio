@@ -7,55 +7,40 @@ import gym.Exception.InvalidAgeException;
 import gym.customers.*;
 import gym.management.Sessions.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Secretary{
-    private Person person;
-    protected static int balance = 0;
+public class Secretary extends Person{
+    private int salary;
+    /**
+     * the next are static because i want to keep this data in case we switch secretary;
+     */
+    private static int gymBalance = 0;
     private static List<Session> sessions = new ArrayList<>();
     private static List<Instructor> instructors = new ArrayList<>();
-    private int salary;
     private static ArrayList<Client> clients=new ArrayList<>();
     private static ArrayList<String>  notifications = new ArrayList<>();
 
     public Secretary(Person person, int salary) {
-        this.person = person;
+        super(person);
         this.salary = salary;;
     }
 
     /**
-     *
+     * check if this secretary equals to current gym secretary.
      * @return if this is the current secretary of from the past
      */
     private boolean isCurrent(){
         return this.equals(Gym.getInstance().getSecretary());
     }
-    @Override
-    public boolean equals(Object o){
-        Secretary s1=(Secretary) o;
-        return (s1.person.equals(this.person));
-    }
-    public Secretary(Secretary secretary) {
-        this.person = secretary.person;
-        this.salary = secretary.salary;
-    }
 
-    private static int ageCalculator(Person p) {
-        LocalDate now = LocalDate.now();
-        LocalDate birth = p.getDate();
-        Period period = Period.between(birth, now);
-        return (period.getYears());
-    }
+
 
     public Client registerClient(Person p) throws DuplicateClientException, InvalidAgeException {
         if(!this.isCurrent())
             throw new NullPointerException();
-        int age = ageCalculator(p);
+        int age = Dates.ageCalculator(p);
         if (age < 18)
             throw new InvalidAgeException();
         Client c = new Client(p);
@@ -139,7 +124,7 @@ public class Secretary{
         if (possible) {
             s.getClients().add(c);
             c.addToBalance(-s.getPrice());
-            balance += s.getPrice();
+            gymBalance += s.getPrice();
             notifications.add("Registered client: " + c.getName() + " to session: " + s.getSessionType() + " on " + s.getDate().toString() + " for price: " + s.getPrice());
         }
     }
@@ -157,12 +142,12 @@ public class Secretary{
             counter+=salary;
         }
         counter+=this.salary;
-        person.addToBalance(this.salary);
-        this.balance-=counter;
+        this.addToBalance(this.salary);
+        this.gymBalance -=counter;
         notifications.add("Salaries have been paid to all employees");
     }
-    protected int getBalance(){
-        return balance;
+    protected int getGymBalance(){
+        return gymBalance;
     }
     public void printActions() {
         if(!this.isCurrent())
@@ -195,11 +180,7 @@ public class Secretary{
         }
         newsletterPublisher.sendNewsletter(str);
 
-        notifications.add("A message was sent to everyone registered for a session on "+toLocal(date)+" : "+str);
-    }
-    private LocalDate toLocal(String str){
-        DateTimeFormatter formatter=DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return LocalDate.parse(str,formatter);
+        notifications.add("A message was sent to everyone registered for a session on "+Dates.toLocal(date)+" : "+str);
     }
     public void notify(String str) {
         if(!this.isCurrent())
@@ -220,7 +201,7 @@ public class Secretary{
 
     @Override
     public String toString() {
-        return person.toString() + " | Role: Secretary | Salary per Month: " + salary;
+        return super.toString() + " | Role: Secretary | Salary per Month: " + salary;
     }
 
     public String instructursPrint() {

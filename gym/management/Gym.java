@@ -6,7 +6,7 @@ public class Gym {
     private static Gym gym;
     private static String name;
     private Secretary secretary;
-
+    int balance=0;
     private Gym(){
 
     }
@@ -32,7 +32,7 @@ public class Gym {
     public String toString(){
         String str="Gym Name: "+name+"\n";
         str+="Gym Secretary: "+secretary.toString()+"\n";
-        str+="Gym Balance: "+secretary.getBalance()+"\n\n";
+        str+="Gym Balance: "+secretary.getGymBalance()+"\n\n";
         str+="Clients Data:\n";
         str+=secretary.clientsPrint();
         str+="\n";
