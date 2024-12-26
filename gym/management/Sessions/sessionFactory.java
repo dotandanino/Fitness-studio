@@ -1,9 +1,10 @@
 package gym.management.Sessions;
 
 import gym.management.Instructor;
+import gym.management.Session;
 
 public class sessionFactory {
-    public static Session createSession(SessionType st,String date, ForumType ft, Instructor i){
+    public static Session createSession(SessionType st, String date, ForumType ft, Instructor i){
         switch (st){
             case Pilates:
                 return new Pilates(date, ft, i);

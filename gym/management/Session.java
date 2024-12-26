@@ -1,12 +1,11 @@
-package gym.management.Sessions;
+package gym.management;
 
 import gym.customers.Client;
-import gym.management.Dates;
-import gym.management.Instructor;
+import gym.management.Sessions.ForumType;
+import gym.management.Sessions.SessionType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public abstract class Session {
@@ -34,10 +33,8 @@ public abstract class Session {
     public ForumType getForumType() {
         return forumType;
     }
-    public Instructor getI() {
-        return i;
-    }
-    public List<Client> getClients() {
+    public Instructor getI() {return i;}
+    List<Client> getClients() {
         return reg;
     }
     public LocalDateTime getDate() {

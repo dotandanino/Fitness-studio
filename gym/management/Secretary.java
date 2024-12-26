@@ -16,6 +16,7 @@ public class Secretary extends Person{
     /**
      * the next are static because i want to keep this data in case we switch secretary;
      */
+    static int trying=0;
     private static int gymBalance = 0;
     private static List<Session> sessions = new ArrayList<>();
     private static List<Instructor> instructors = new ArrayList<>();
@@ -34,15 +35,12 @@ public class Secretary extends Person{
     private boolean isCurrent(){
         return this.equals(Gym.getInstance().getSecretary());
     }
-
-
-
-    public Client registerClient(Person p) throws DuplicateClientException, InvalidAgeException {
+    public Client registerClient(Person p) {
         if(!this.isCurrent())
             throw new NullPointerException();
         int age = Dates.ageCalculator(p);
         if (age < 18)
-            throw new InvalidAgeException();
+            throw new InvalidAgeException("Error: Client must be at least 18 years old to register");
         Client c = new Client(p);
         if (clients.contains(c)) {
             throw new DuplicateClientException("Error: The client is already registered");
@@ -52,7 +50,7 @@ public class Secretary extends Person{
         return c;
     }
 
-    public void unregisterClient(Client c2) throws ClientNotRegisteredException {
+    public void unregisterClient(Client c2) {
         if(!this.isCurrent())
             throw new NullPointerException();
         for (int i = 0; i < clients.size(); i++) {
@@ -74,7 +72,7 @@ public class Secretary extends Person{
         return I;
     }
 
-    public Session addSession(SessionType type, String date, ForumType ft, Instructor i) throws InstructorNotQualifiedException {
+    public Session addSession(SessionType type, String date, ForumType ft, Instructor i) {
         if(!this.isCurrent())
             throw new NullPointerException();
         if (i.getSessionTypes().contains(type)) {
@@ -83,10 +81,10 @@ public class Secretary extends Person{
             notifications.add("Created new session: " + type + " on " + session.getDate().toString() + " with instructor: " + i.getName());
             return session;
         }
-        throw new InstructorNotQualifiedException();
+        throw new InstructorNotQualifiedException("Error: Instructor is not qualified to conduct this session type.");
     }
 
-    public void registerClientToLesson(Client c, Session s) throws DuplicateClientException, ClientNotRegisteredException {
+    public void registerClientToLesson(Client c, Session s){
         if(!this.isCurrent())
             throw new NullPointerException();
         boolean possible = true;

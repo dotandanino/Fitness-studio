@@ -1,7 +1,5 @@
 package gym.Exception;
 
-public class InstructorNotQualifiedException extends Exception {
-    public String getMessage() {
-        return "Error: Instructor is not qualified to conduct this session type.";
-    }
+public class InstructorNotQualifiedException extends RuntimeException {
+    public InstructorNotQualifiedException(String str){super(str);}
 }
