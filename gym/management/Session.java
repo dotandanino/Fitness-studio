@@ -32,7 +32,7 @@ public abstract class Session {
     public ForumType getForumType() {
         return forumType;
     }
-    public Instructor getI() {return i;}
+    protected Instructor getI() {return i;}
     List<Client> getClients() {
         return reg;
     }

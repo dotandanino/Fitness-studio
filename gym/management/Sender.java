@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public abstract class Sender {
     private final ArrayList<Member> members=new ArrayList<>();
-    public void register(Member member){
+    protected void register(Member member){
         members.add(member);
     }
-    public void unRegister(Member member){
+    protected void unRegister(Member member){
         members.remove(member);
     }
-    public void notifyMembers(String newsletter){
+    protected void notifyMembers(String newsletter){
         for (Member member: members){
             member.update(newsletter);
         }

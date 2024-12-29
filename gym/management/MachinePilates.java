@@ -5,7 +5,7 @@ import gym.management.Sessions.SessionType;
 public class MachinePilates extends Session {
     private static final int MAXCLIENTS=10;
     private static final int price=80;
-    MachinePilates(String date, ForumType ft, Instructor i) {
+    protected MachinePilates(String date, ForumType ft, Instructor i) {
         super(date,ft,i, SessionType.MachinePilates, MAXCLIENTS, price);
     }
 

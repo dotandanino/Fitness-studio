@@ -11,10 +11,10 @@ public class Gym {
     private Secretary secretary;
     int balance=0;
     private int gymBalance = 0;
-    ArrayList<Session> sessions = new ArrayList<>();
-    ArrayList<Instructor> instructors = new ArrayList<>();
-    ArrayList<Client> clients=new ArrayList<>();
-    ArrayList<String>  notifications = new ArrayList<>();
+    protected ArrayList<Session> sessions = new ArrayList<>();
+    protected ArrayList<Instructor> instructors = new ArrayList<>();
+    protected ArrayList<Client> clients=new ArrayList<>();
+    protected ArrayList<String>  notifications = new ArrayList<>();
     private Gym(){
 
     }

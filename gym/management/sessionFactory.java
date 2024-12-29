@@ -3,7 +3,7 @@ package gym.management;
 import gym.management.Sessions.SessionType;
 
 public class sessionFactory {
-    static Session createSession(SessionType st, String date, ForumType ft, Instructor i){
+    protected static Session createSession(SessionType st, String date, ForumType ft, Instructor i){
         switch (st){
             case Pilates:
                 return new Pilates(date, ft, i);
