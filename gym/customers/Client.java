@@ -2,10 +2,8 @@ package gym.customers;
 
 import gym.management.Dates;
 import gym.management.Member;
-import gym.management.Sessions.ForumType;
+import gym.management.ForumType;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -9,26 +9,17 @@ import gym.management.Sessions.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Secretary extends Person{
     private int salary;
     boolean isCurrent;
-    /**
-     * the next are static because i want to keep this data in case we switch secretary;
-     */
-    public Secretary(Person person, int salary) {
+    Secretary(Person person, int salary) {
         super(person);
         this.salary = salary;;
     }
-
-    /**
-     * check if this secretary equals to current gym secretary.
-     * @return if this is the current secretary of from the past
-     */
     public Client registerClient(Person p) {
-        if(!this.isCurrent)
-            throw new NullPointerException();
+        if(!this.isCurrent)//check if this the current secretary and if not throw null pointer exception with the message from output.txt
+            throw new NullPointerException("Error: Former secretaries are not permitted to perform actions");
         int age = Dates.ageCalculator(p);
         Gym gym=Gym.getInstance();
         if (age < 18)
@@ -43,8 +34,8 @@ public class Secretary extends Person{
     }
 
     public void unregisterClient(Client c2) {
-        if(!this.isCurrent)
-            throw new NullPointerException();
+        if(!this.isCurrent)//check if this the current secretary and if not throw null pointer exception with the message from output.txt
+            throw new NullPointerException("Error: Former secretaries are not permitted to perform actions");
         Gym gym=Gym.getInstance();
         ArrayList<Client> clients=gym.clients;
         for (int i = 0; i < clients.size(); i++) {
@@ -58,8 +49,8 @@ public class Secretary extends Person{
     }
 
     public Instructor hireInstructor(Person p, int i, ArrayList<SessionType> sessionTypes) {
-        if(!this.isCurrent)
-            throw new NullPointerException();
+        if(!this.isCurrent)//check if this the current secretary and if not throw null pointer exception with the message from output.txt
+            throw new NullPointerException("Error: Former secretaries are not permitted to perform actions");
         Gym gym=Gym.getInstance();
         gym.notifications.add("Hired new instructor: " + p.getName() + " with salary per hour: " + i);
         Instructor I = new Instructor(p, i, sessionTypes);
@@ -68,8 +59,8 @@ public class Secretary extends Person{
     }
 
     public Session addSession(SessionType type, String date, ForumType ft, Instructor i) {
-        if(!this.isCurrent)
-            throw new NullPointerException();
+        if(!this.isCurrent)//check if this the current secretary and if not throw null pointer exception with the message from output.txt
+            throw new NullPointerException("Error: Former secretaries are not permitted to perform actions");
         Gym gym=Gym.getInstance();
         if (i.getSessionTypes().contains(type)) {
             Session session = sessionFactory.createSession(type, date, ft, i);
@@ -80,9 +71,16 @@ public class Secretary extends Person{
         throw new InstructorNotQualifiedException("Error: Instructor is not qualified to conduct this session type.");
     }
 
+    /**
+     * check if the person can register to this lesson by the conditions in the pdf.
+     * if not we throw exception/add to the notification by what we saw in the output.txt
+     * @param c-the client
+     * @param s-the session
+     */
+
     public void registerClientToLesson(Client c, Session s){
-        if(!this.isCurrent)
-            throw new NullPointerException();
+        if(!this.isCurrent)//check if this the current secretary and if not throw null pointer exception with the message from output.txt
+            throw new NullPointerException("Error: Former secretaries are not permitted to perform actions");
         Gym gym=Gym.getInstance();
         boolean possible = true;
         LocalDateTime sessionDate = s.getDate();
@@ -124,9 +122,13 @@ public class Secretary extends Person{
         }
     }
 
+    /**
+     * going on the session list session by session and pay fot the instructor
+     * about the lesson. after this we also pay to the secretary and than we decrease the gym balance.
+     */
     public void paySalaries() {
-        if(!this.isCurrent)
-            throw new NullPointerException();
+        if(!this.isCurrent)//check if this the current secretary and if not throw null pointer exception with the message from output.txt
+            throw new NullPointerException("Error: Former secretaries are not permitted to perform actions");
         int counter=0;
         Instructor instructor;
         int salary;
@@ -142,17 +144,27 @@ public class Secretary extends Person{
         gym.addToBalnce(-counter);
         gym.notifications.add("Salaries have been paid to all employees");
     }
+
+    /**
+     * print the notifications list.
+     */
     public void printActions() {
-        if(!this.isCurrent)
-            throw new NullPointerException();
+        if(!this.isCurrent)//check if this the current secretary and if not throw null pointer exception with the message from output.txt
+            throw new NullPointerException("Error: Former secretaries are not permitted to perform actions");
         Gym gym=Gym.getInstance();
         for (String str : gym.notifications) {
             System.out.println(str);
         }
     }
+
+    /**
+     * all the notify function using the observer design pattern.
+     * @param s-the specific session we want to notify
+     * @param str-the message
+     */
     public void notify(Session s, String str) {
-        if(!this.isCurrent)
-            throw new NullPointerException();
+        if(!this.isCurrent)//check if this the current secretary and if not throw null pointer exception with the message from output.txt
+            throw new NullPointerException("Error: Former secretaries are not permitted to perform actions");
         NewsletterPublisher newsletterPublisher = new NewsletterPublisher();
         for (Client c : s.getClients()) {
             newsletterPublisher.register(c);
@@ -163,12 +175,12 @@ public class Secretary extends Person{
     }
 
     public void notify(String date, String str) {
-        if(!this.isCurrent)
-            throw new NullPointerException();
+        if(!this.isCurrent)//check if this the current secretary and if not throw null pointer exception with the message from output.txt
+            throw new NullPointerException("Error: Former secretaries are not permitted to perform actions");
         NewsletterPublisher newsletterPublisher = new NewsletterPublisher();
         Gym gym=Gym.getInstance();
         for (Session s:gym.sessions){
-            if((s.getStrDate().substring(0,10)).equals(date)){
+            if((s.getStrDate().substring(0,10)).equals(date)){//we use substring on the session date because we dont need the hour.
                 for (Client c : s.getClients()) {
                     newsletterPublisher.register(c);
                 }
@@ -177,10 +189,11 @@ public class Secretary extends Person{
         newsletterPublisher.sendNewsletter(str);
 
         gym.notifications.add("A message was sent to everyone registered for a session on "+Dates.toLocal(date)+" : "+str);
+        //the casting is for print like the output.txt
     }
     public void notify(String str) {
-        if(!this.isCurrent)
-            throw new NullPointerException();
+        if(!this.isCurrent)//check if this the current secretary and if not throw null pointer exception with the message from output.txt
+            throw new NullPointerException("Error: Former secretaries are not permitted to perform actions");
         Gym gym=Gym.getInstance();
         NewsletterPublisher newsletterPublisher = new NewsletterPublisher();
         for (Client c : gym.clients) {

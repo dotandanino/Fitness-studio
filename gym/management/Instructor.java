@@ -10,7 +10,7 @@ public class Instructor extends Person{
     private ArrayList<SessionType> sessionTypes;
     //package private to make sure we will have the option to build new instructor
     // from Secretary but not from the main
-    Instructor(Person p, int i, ArrayList<SessionType> sessionTypes) {
+    protected Instructor(Person p, int i, ArrayList<SessionType> sessionTypes) {
         super(p);
         this.salary=i;
         this.sessionTypes=sessionTypes;

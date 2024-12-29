@@ -1,7 +1,6 @@
 package gym.management;
 
 import gym.customers.Client;
-import gym.management.Sessions.ForumType;
 import gym.management.Sessions.SessionType;
 
 import java.time.LocalDateTime;

@@ -20,11 +20,11 @@ public class Main {
         Person p9 = new Person("Dani", 850, Gender.Male, "03-10-2015");
 
         Gym gym = Gym.getInstance();
+        Gym gym2=Gym.getInstance();
         gym.setName("CrossFit");
         gym.setSecretary(p1, 9000);
 
         Secretary gymSecretary = gym.getSecretary();
-
         Client c1 = gymSecretary.registerClient(p2);
         Client c2 = gymSecretary.registerClient(p3);
         Client c3 = gymSecretary.registerClient(p4);
